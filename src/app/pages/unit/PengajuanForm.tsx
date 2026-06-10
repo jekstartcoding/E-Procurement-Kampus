@@ -22,7 +22,8 @@ export default function PengajuanForm() {
   const paguAnggaran = 1300000000; // Rp 1.300.000.000
   const totalBiaya = items.reduce((sum, item) => sum + item.jumlah * item.hargaSatuan, 0);
   const sisaPagu = paguAnggaran - totalBiaya;
-  const isAnggaranValid = totalBiaya <= paguAnggaran && totalBiaya > 0;
+  // SIMULASI DEFECT (FAIL SCENARIO)
+  const isAnggaranValid = totalBiaya > 0;
 
   const addItem = () => {
     const newItem: Item = {
@@ -110,10 +111,10 @@ export default function PengajuanForm() {
 
         {/* Pagu Anggaran Card */}
         <div className={`rounded-xl p-6 mb-6 border-2 ${
-          isAnggaranValid ? "bg-green-50 border-green-200" : totalBiaya > paguAnggaran ? "bg-red-50 border-red-200" : "bg-blue-50 border-blue-200"
+          totalBiaya > 0 ? "bg-green-50 border-green-200" : "bg-blue-50 border-blue-200"
         }`}>
           <div className="flex items-start gap-3">
-            {isAnggaranValid ? (
+            {totalBiaya > 0 ? (
               <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
             ) : (
               <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0" />
@@ -129,18 +130,18 @@ export default function PengajuanForm() {
                 </div>
                 <div>
                   <p className="text-gray-600">Total Pengajuan:</p>
-                  <p className={`font-bold ${totalBiaya > paguAnggaran ? "text-red-600" : "text-gray-900"}`}>
+                  <p className="font-bold text-gray-900">
                     Rp {totalBiaya.toLocaleString("id-ID")}
                   </p>
                 </div>
                 <div>
                   <p className="text-gray-600">Sisa Pagu:</p>
-                  <p className={`font-bold ${sisaPagu < 0 ? "text-red-600" : "text-green-600"}`}>
+                  <p className="font-bold text-green-600">
                     Rp {sisaPagu.toLocaleString("id-ID")}
                   </p>
                 </div>
               </div>
-              {totalBiaya > paguAnggaran && (
+              {false && (
                 <p className="text-sm text-red-700 mt-2 font-medium">
                   ⚠️ Total biaya melebihi pagu anggaran yang tersedia!
                 </p>
